@@ -3,54 +3,87 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>CV → Portfolio Generator</title>
+<title>CV a Portfolio Profesional</title>
 
 <style>
 body {
-    font-family: Arial, sans-serif;
     margin: 0;
-    background: #f5f5f5;
+    font-family: Arial, sans-serif;
+    background: #f6f6f6;
+    color: #111;
 }
 
 .container {
-    display: flex;
-    height: 100vh;
+    max-width: 1000px;
+    margin: auto;
+    padding: 40px 20px;
 }
 
-.left, .right {
-    width: 50%;
-    padding: 20px;
-    overflow: auto;
+.hero {
+    text-align: center;
+    padding: 80px 20px;
 }
 
-textarea {
-    width: 100%;
-    height: 80%;
-    font-family: monospace;
+h1 {
+    font-size: 42px;
+    margin-bottom: 10px;
 }
 
-button {
-    padding: 10px;
-    margin-top: 10px;
-    cursor: pointer;
+.subtitle {
+    font-size: 18px;
+    color: #555;
+    margin-bottom: 30px;
+}
+
+.cta {
+    display: inline-block;
+    background: #111;
+    color: white;
+    padding: 15px 25px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.cta:hover {
+    background: #333;
+}
+
+.section {
+    margin-top: 60px;
 }
 
 .card {
     background: white;
-    padding: 15px;
-    margin-bottom: 10px;
-    border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
 }
-h1,h2,h3 { margin: 5px 0; }
-.badge {
-    display: inline-block;
-    background: #333;
-    color: white;
-    padding: 5px 10px;
-    margin: 2px;
-    border-radius: 20px;
-    font-size: 12px;
+
+.steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+}
+
+.price {
+    text-align: center;
+    font-size: 26px;
+    margin-top: 20px;
+}
+
+.small {
+    text-align: center;
+    color: #666;
+    margin-top: 10px;
+}
+
+.footer {
+    text-align: center;
+    margin-top: 80px;
+    font-size: 14px;
+    color: #777;
 }
 </style>
 </head>
@@ -59,59 +92,79 @@ h1,h2,h3 { margin: 5px 0; }
 
 <div class="container">
 
-    <!-- INPUT -->
-    <div class="left">
-        <h2>📄 Pega tu CV en JSON</h2>
-        <textarea id="cvInput"></textarea>
-        <button onclick="generate()">Generar Portfolio</button>
+    <!-- HERO -->
+    <div class="hero">
+        <h1>Convierte tu CV en un Portfolio Profesional</h1>
+        <p class="subtitle">
+            Sin saber diseño. Sin saber programación. En menos de 24h.
+        </p>
+
+        <a class="cta" href="https://wa.me/34TU_NUMERO_AQUI" target="_blank">
+            🚀 Quiero mi portfolio ahora
+        </a>
+
+        <p class="small">Ideal para estudiantes, freelancers y profesionales</p>
     </div>
 
-    <!-- OUTPUT -->
-    <div class="right" id="output">
-        <h2>Tu portfolio aparecerá aquí</h2>
+    <!-- BENEFICIOS -->
+    <div class="section">
+        <h2>¿Qué obtienes?</h2>
+
+        <div class="card">✔ Portfolio online profesional listo para enviar</div>
+        <div class="card">✔ Diseño moderno y limpio</div>
+        <div class="card">✔ Enlace tipo web para LinkedIn o CV</div>
+        <div class="card">✔ Entrega rápida (24h)</div>
+    </div>
+
+    <!-- COMO FUNCIONA -->
+    <div class="section">
+        <h2>Cómo funciona</h2>
+
+        <div class="steps">
+            <div class="card">
+                <h3>1. Envías tu CV</h3>
+                <p>En texto, PDF o LinkedIn.</p>
+            </div>
+
+            <div class="card">
+                <h3>2. Lo transformo</h3>
+                <p>Creo tu portfolio con diseño profesional.</p>
+            </div>
+
+            <div class="card">
+                <h3>3. Recibes tu web</h3>
+                <p>Un enlace listo para compartir.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- PRECIO -->
+    <div class="section">
+        <h2>Precio lanzamiento</h2>
+
+        <div class="card price">
+            🔥 10€ – Portfolio completo
+        </div>
+
+        <p class="small">
+            Oferta inicial para primeros clientes
+        </p>
+    </div>
+
+    <!-- CTA FINAL -->
+    <div class="section" style="text-align:center;">
+        <h2>¿Listo para tener tu portfolio?</h2>
+
+        <a class="cta" href="https://wa.me/34TU_NUMERO_AQUI" target="_blank">
+            Hablar por WhatsApp
+        </a>
+    </div>
+
+    <div class="footer">
+        © Tu servicio de CV a Portfolio
     </div>
 
 </div>
-
-<script>
-function generate() {
-    const data = JSON.parse(document.getElementById("cvInput").value);
-    const out = document.getElementById("output");
-
-    let html = `
-        <div class="card">
-            <h1>${data.name}</h1>
-            <h3>${data.title}</h3>
-            <p>${data.about}</p>
-        </div>
-    `;
-
-    html += `<div class="card"><h2>Skills</h2>`;
-    data.skills.forEach(s => {
-        html += `<span class="badge">${s}</span>`;
-    });
-    html += `</div>`;
-
-    html += `<div class="card"><h2>Experiencia</h2>`;
-    data.experience.forEach(e => {
-        html += `
-            <p><strong>${e.role}</strong> - ${e.company} (${e.years})</p>
-            <p>${e.description}</p>
-        `;
-    });
-    html += `</div>`;
-
-    html += `<div class="card"><h2>Educación</h2>`;
-    data.education.forEach(e => {
-        html += `
-            <p><strong>${e.degree}</strong> - ${e.school} (${e.year})</p>
-        `;
-    });
-    html += `</div>`;
-
-    out.innerHTML = html;
-}
-</script>
 
 </body>
 </html>
