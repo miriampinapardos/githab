@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>CV → Portfolio Generator</title>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background: #f5f5f5;
+}
+
+.container {
+    display: flex;
+    height: 100vh;
+}
+
+.left, .right {
+    width: 50%;
+    padding: 20px;
+    overflow: auto;
+}
+
+textarea {
+    width: 100%;
+    height: 80%;
+    font-family: monospace;
+}
+
+button {
+    padding: 10px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.card {
+    background: white;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+h1,h2,h3 { margin: 5px 0; }
+.badge {
+    display: inline-block;
+    background: #333;
+    color: white;
+    padding: 5px 10px;
+    margin: 2px;
+    border-radius: 20px;
+    font-size: 12px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- INPUT -->
+    <div class="left">
+        <h2>📄 Pega tu CV en JSON</h2>
+        <textarea id="cvInput"></textarea>
+        <button onclick="generate()">Generar Portfolio</button>
+    </div>
+
+    <!-- OUTPUT -->
+    <div class="right" id="output">
+        <h2>Tu portfolio aparecerá aquí</h2>
+    </div>
+
+</div>
+
+<script>
+function generate() {
+    const data = JSON.parse(document.getElementById("cvInput").value);
+    const out = document.getElementById("output");
+
+    let html = `
+        <div class="card">
+            <h1>${data.name}</h1>
+            <h3>${data.title}</h3>
+            <p>${data.about}</p>
+        </div>
+    `;
+
+    html += `<div class="card"><h2>Skills</h2>`;
+    data.skills.forEach(s => {
+        html += `<span class="badge">${s}</span>`;
+    });
+    html += `</div>`;
+
+    html += `<div class="card"><h2>Experiencia</h2>`;
+    data.experience.forEach(e => {
+        html += `
+            <p><strong>${e.role}</strong> - ${e.company} (${e.years})</p>
+            <p>${e.description}</p>
+        `;
+    });
+    html += `</div>`;
+
+    html += `<div class="card"><h2>Educación</h2>`;
+    data.education.forEach(e => {
+        html += `
+            <p><strong>${e.degree}</strong> - ${e.school} (${e.year})</p>
+        `;
+    });
+    html += `</div>`;
+
+    out.innerHTML = html;
+}
+</script>
+
+</body>
+</html>
